@@ -1,8 +1,11 @@
 <?php
 
+require_once __DIR__ . '/Logger.php';
+
 class SmsService {
 
     public function send($to, $message) {
+
         $config = include __DIR__ . '/../config/config.php';
 
         $curl = curl_init();
@@ -21,6 +24,9 @@ class SmsService {
 
         $response = curl_exec($curl);
         curl_close($curl);
+
+        // LOG RESPONSE
+        Logger::log("Phone: $to | Message: $message | Response: $response");
 
         return $response;
     }
